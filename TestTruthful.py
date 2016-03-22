@@ -11,11 +11,11 @@ class Truthful:
         self.budget = budget
 
     def initial_bid(self, reserve):
-        return 10000;
+        return self.value
 
 
     def bid(self, t, history, reserve):
-        return 10000;
+        return self.value
 
     def __repr__(self):
         return "%s(id=%d, value=%d)" % (

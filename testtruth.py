@@ -3,7 +3,7 @@
 from gsp import GSP
 from util import argmax_index
 
-class TestTruthful10000:
+class testtruth:
     """Truthful bidding agent"""
     def __init__(self, id, value, budget):
         self.id = id
@@ -11,11 +11,11 @@ class TestTruthful10000:
         self.budget = budget
 
     def initial_bid(self, reserve):
-        return 10000;
+        return 10000
 
 
     def bid(self, t, history, reserve):
-        return 10000;
+        return 10000
 
     def __repr__(self):
         return "%s(id=%d, value=%d)" % (
