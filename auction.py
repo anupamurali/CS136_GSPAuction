@@ -47,8 +47,8 @@ def sim(config):
     # TODO: Create agents here
     agents = init_agents(config)
     # Uncomment to print agents.
-    #for a in agents:
-    #    logging.info(a)
+    for a in agents:
+        logging.info(a)
 
     n = len(agents)
     by_id = dict((a.id, a) for a in agents)
