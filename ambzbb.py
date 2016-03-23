@@ -50,8 +50,15 @@ class ambzbb:
         returns a list of utilities per slot.
         """
         # TODO: Fill this in
+        info = self.slot_info(t, history, reserve)
+        
         utilities = []   # Change this
+        round = history.round(t-1)
+        clicks = round.clicks
+        utilities = map(lambda (x,y,z):(self.value - y)*clicks[x],info)
 
+        
+        print utilities
         
         return utilities
 
@@ -79,11 +86,16 @@ class ambzbb:
         # If s*_j is the top slot, bid the value v_j
 
         prev_round = history.round(t-1)
-        (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
 
-        # TODO: Fill this in.
-        bid = 0  # change this
-        
+        (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
+        if min_bid > self.value:
+            bid = self.value
+        else:
+            if slot == 0:
+                bid = self.value
+            else:
+                bid = self.value*.25 + min_bid*.75
+                
         return bid
 
     def __repr__(self):
