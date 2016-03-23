@@ -11,11 +11,11 @@ class testtruthbig:
         self.budget = budget
 
     def initial_bid(self, reserve):
-        return 100000
+        return 100
 
 
     def bid(self, t, history, reserve):
-        return 100000
+        return 100
 
     def __repr__(self):
         return "%s(id=%d, value=%d)" % (
