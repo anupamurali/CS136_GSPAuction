@@ -47,8 +47,8 @@ def sim(config):
     # TODO: Create agents here
     agents = init_agents(config)
     # Uncomment to print agents.
-    #for a in agents:
-    #    logging.info(a)
+    for a in agents:
+        logging.info(a)
 
     n = len(agents)
     by_id = dict((a.id, a) for a in agents)
@@ -106,6 +106,7 @@ def sim(config):
                     # Out of money: make bid zero.
                     current_bids.append( (a.id, 0))
             bids[t] = current_bids
+        print bids[t]
 
         ##   Ignore those below reserve price
         active_bidders = len(filter(lambda (i,b): b >= reserve, bids[t]))
@@ -126,7 +127,8 @@ def sim(config):
         ##  3. Define payments
         slot_payments[t] = map(lambda (x,y): x*y,
                                zip(slot_clicks[t], per_click_payments[t]))
-                               
+        print slot_payments[t]
+        
         ##  4.  Save utility (misnamed as values)
         values[t] = dict(zip(agent_ids, zeros))
         
@@ -350,7 +352,7 @@ def main(args):
             ###  simulation ends.
             stats = Stats(history, values)
             # Print stats in console?
-            # logging.info(stats)
+            logging.info(stats)
             
             for id in range(n):
                 totals[id] += stats.total_utility(id)
