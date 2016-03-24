@@ -5,7 +5,7 @@
 # called test_blah and runs them)
 
 from auction import History
-from bbagent import BBAgent
+from ambzbb import ambzbb as BBAgent
 
 
 def dual_assert(x,y):
@@ -124,7 +124,7 @@ def test_bb_overbid():
     # a1's utils for slots: [3 * (8-16), 2*(8-14), 0] = [-24, -12, 0]
     assert a1.expected_utils(t, history, reserve) == [-24, -12, 0]
     assert a1.target_slot(t, history, reserve) == (2, 0, 14)
-    # bid for slot 2 = value = 8
+   # bid for slot 2 = value = 8
     dual_assert (a1.bid(t, history, reserve), 8)
     print "\n\tFinished test_bb_overbid.."
 

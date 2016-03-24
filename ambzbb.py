@@ -57,9 +57,7 @@ class ambzbb:
         clicks = round.clicks
         utilities = map(lambda (x,y,z):(self.value - y)*clicks[x],info)
 
-        
-        print utilities
-        
+              
         return utilities
 
     def target_slot(self, t, history, reserve):
@@ -86,7 +84,7 @@ class ambzbb:
         # If s*_j is the top slot, bid the value v_j
 
         prev_round = history.round(t-1)
-
+        clicks = prev_round.clicks
         (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
         if min_bid > self.value:
             bid = self.value
@@ -94,7 +92,7 @@ class ambzbb:
             if slot == 0:
                 bid = self.value
             else:
-                bid = self.value*.25 + min_bid*.75
+                bid = self.value - (clicks[slot])/(1.0*clicks[slot-1])*(self.value - min_bid)
                 
         return bid
 

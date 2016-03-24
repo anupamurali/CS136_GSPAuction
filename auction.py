@@ -106,7 +106,6 @@ def sim(config):
                     # Out of money: make bid zero.
                     current_bids.append( (a.id, 0))
             bids[t] = current_bids
-        print bids[t]
 
         ##   Ignore those below reserve price
         active_bidders = len(filter(lambda (i,b): b >= reserve, bids[t]))
@@ -127,7 +126,6 @@ def sim(config):
         ##  3. Define payments
         slot_payments[t] = map(lambda (x,y): x*y,
                                zip(slot_clicks[t], per_click_payments[t]))
-        print slot_payments[t]
         
         ##  4.  Save utility (misnamed as values)
         values[t] = dict(zip(agent_ids, zeros))
