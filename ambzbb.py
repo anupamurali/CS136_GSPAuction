@@ -85,6 +85,7 @@ class ambzbb:
 
         prev_round = history.round(t-1)
         clicks = prev_round.clicks
+        
         (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
         if min_bid > self.value:
             bid = self.value

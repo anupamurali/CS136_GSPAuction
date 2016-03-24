@@ -4,6 +4,7 @@ import sys
 
 from gsp import GSP
 from util import argmax_index
+import random
 
 class ambzbudget:
     """Balanced bidding agent"""
@@ -50,9 +51,19 @@ class ambzbudget:
         returns a list of utilities per slot.
         """
         # TODO: Fill this in
-        utilities = []   # Change this
+        info = self.slot_info(t, history, reserve)
 
+        spent = history.agents_spent[self.id]
+        budgetleft = self.budget - spent
+        percentleft = budgetleft/self.budget
+        rate = percentleft/((49-t)/50.0)
         
+        utilities = []   # Change this
+        round = history.round(t-1)
+        clicks = round.clicks
+        utilities = map(lambda (x,y,z):(self.value - y)*clicks[x],info)
+
+              
         return utilities
 
     def target_slot(self, t, history, reserve):
@@ -79,10 +90,31 @@ class ambzbudget:
         # If s*_j is the top slot, bid the value v_j
 
         prev_round = history.round(t-1)
-        (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
+        clicks = prev_round.clicks
 
-        # TODO: Fill this in.
-        bid = 0  # change this
+        spent = history.agents_spent[self.id]
+        budgetleft = self.budget - spent
+        percentleft = budgetleft/(self.budget*1.0)
+        rate = percentleft/((48.01-t)/48.0)
+        
+        print budgetleft
+        
+        (slot, min_bid, max_bid) = self.target_slot(t, history, reserve)
+        if min_bid > self.value:
+            bid = self.value
+        else:
+            if slot == 0:
+                bid = self.value
+            else:
+                bid = self.value - (clicks[slot])/(1.0*clicks[slot-1])*(self.value - min_bid)
+        
+        print rate
+
+        #combination of checking for the rate of spending and the period
+        # will choose not to bid at a higher rate when spending too quickly
+        # or if click through rate in period is low
+        if random.random() > rate * ((.5*clicks[0]+40)/80.0):
+            bid = 0;
         
         return bid
 
