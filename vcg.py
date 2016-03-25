@@ -30,6 +30,7 @@ class VCG:
         
         valid = lambda (a, bid): bid >= reserve
         valid_bids = filter(valid, bids)
+        n = len(valid_bids)
 
         rev_cmp_bids = lambda (a1, b1), (a2, b2): cmp(b2, b1)
         # shuffle first to make sure we don't have any bias for lower or
@@ -44,15 +45,17 @@ class VCG:
         
         (allocation, just_bids) = zip(*allocated_bids)
 
-        # TODO: You just have to implement this function
         def total_payment(k):
             """
             Total payment for a bidder in slot k.
             """
             c = slot_clicks
-            n = len(allocation)
-
-            # TODO: Compute the payment and return it.
+            if k == n-2: 
+                return c[k]*float(max(reserve, valid_bids[k+1][1]))
+            elif k < n-2: 
+                return (c[k]-c[k+1])*float(valid_bids[k+1][1])+total_payment(k+1)
+            else:
+                return 0.0
 
         def norm(totals):
             """Normalize total payments by the clicks in each slot"""
